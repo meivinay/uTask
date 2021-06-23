@@ -1,54 +1,78 @@
-const puppeteer = require('puppeteer');
-const scheduleSleep=require("./jobSchedule.js");
-let hour=3;
-let minute=20;
-let ampm="AM";
-hour=removeLeadingZero(hour);
-minute=roundoffMinutes(minute);
-ampm=capitalize(ampm);
-let timings={};
-(async () => {
-    const browser = await puppeteer.launch({headless:false,defaultViewport:null,args:["--start-maximized"],sloMo:500});
-  let pages = await browser.pages();
-  let page=pages[0];
-  await page.goto('https://sleepyti.me/');
 
-await page.select("#hour",`${hour}`)
-await page.select("#minute",`${minute}`);
-await page.select("#ampm",`${ampm}`);
-await page.click("#calculate");
-await page.waitForTimeout(4000);
-await page.waitForSelector("#result4",{visible:true});
-    for(let i=1;i<=4;i++)
-    {
-        let time=await page.evaluate(function(i){ return document.querySelector(`#result${i}`).innerText},i);
-        console.log(time);
-        let hourIntwentyfourHourFormat=timeFormatChange(time.split(":")[0],time.split(" ")[1]);
-        let minute=time.split(":")[1].split(" ")[0];
-        scheduleSleep(minute,hourIntwentyfourHourFormat);
+const sleepTime = require("./sleepTime.js");
+const wakeTime = require("./wakeTime.js");
+let breakTime = require("./breakTime.js");
+let input = process.argv.slice(2);
+let time;
+(async () => {
+    if (input.length > 2) {
+        console.log("Command not found");
+        return;
     }
-   
-    
+    else {
+
+        let firstChar = input[0].charAt(0);
+        if (firstChar === "-") {
+            if (input[0] === "-s") {
+                try {
+                    time = await breakTime(input[1])
+                }
+                catch (e) {
+                    console.log(e);
+                    return;
+                }
+                if (isTimeValid(time)) {
+                    console.log("after time validation");
+                    let hour = Number(time[0]);
+                    let minute = roundoffMinutes(Number(time[1]));
+                    let period = time[2].toUpperCase();
+                    console.log(hour,minute,period);
+                    sleepTime(hour, minute, period);
+                }
+                else {
+                    console.log("Please Enter Valid Time");
+                }
+            }
+            else if (input[0] === "-w") {
+                wakeTime();
+            }
+            else {
+                console.log("Not a valid option");
+            }
+        }
+        else {
+            console.log("Not a valid command");
+        }
+    }
 })();
 
-function roundoffMinutes(minute)
-{
-    return Math.ceil(minute/5)*5;
-}
-function removeLeadingZero(hour)
-{
-    if(hour<10)
-    return hour%10;
-}
-function capitalize(str)
-{
-    return str.toUpperCase();
+function isTimeValid(time) {
+    console.log("validating time");
+    let isHourValid = false;
+    let isMinuteValid = false;
+    let isPeriodvalid = false;
+
+    let hour = Number(time[0]);
+    if (hour >= 1 && hour <= 12)
+        isHourValid = true;
+
+
+    let minute = Number(time[1]);
+    if (minute >= 0 && minute <= 60)
+        isMinuteValid = true;
+
+
+    let period = time[2];
+    if (period === 'am' || period === 'pm' || period === 'AM' || period === 'PM')
+        isPeriodvalid = true;
+
+    if (isHourValid && isMinuteValid && isPeriodvalid)
+        return true;
+    else
+        return false;
 }
 
-function timeFormatChange(hour,ampm)
-{
-    if(ampm==="AM" && hour==12) return Number(hours)-12;
-    if(ampm==="PM" && hour<12) return Number(hour)+12;
+function roundoffMinutes(minute) {
+    return Math.ceil(minute / 5) * 5;
 
-    return hour;
 }
