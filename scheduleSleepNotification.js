@@ -1,12 +1,14 @@
 const schedule = require('node-schedule');
 const createNotification = require("./notifier.js");
 let jobs = [];
-function sleepSchedule(minute, hour) {
-  //const date = new Date(2021, 5, 23, 13, i, 0); //year month date (month 0 to 11)
+let minute = process.argv[2];
+let hour = process.argv[3];
+(async function sleepSchedule(minute, hour) {
   jobs.push(schedule.scheduleJob(`${minute} ${hour} * * *`, function () {
-    createNotification();
-  }))
+      createNotification();
+      setTimeout(() => process.exit(), 7000);
+  }));
+
   console.log(`Job schedule for ${hour} ${minute}`);
-  console.log("exit");
-}
-module.exports = sleepSchedule;
+
+})(minute, hour);

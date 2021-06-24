@@ -1,7 +1,11 @@
 const puppeteer = require('puppeteer');
-const scheduleSleep = require("./scheduleSleep.js");
-
-async function sleepTime(hour,minute,period) {
+const fs = require("fs");
+//const scheduleSleep = require("./scheduleSleepNotification.js");
+const { spawn } = require("child_process");
+let sub_process = [];
+const out = fs.openSync("./schedule.log","a");
+const err = fs.openSync("./schedule.log","a")
+async function sleepTime(hour, minute, period) {
     const browser = await puppeteer.launch({ headless: false, defaultViewport: null, args: ["--start-maximized"], sloMo: 500 });
     let pages = await browser.pages();
     let page = pages[0];
@@ -14,17 +18,40 @@ async function sleepTime(hour,minute,period) {
     await page.waitForSelector("#result4", { visible: true });
     for (let i = 1; i <= 4; i++) {
         let time = await page.evaluate(function (i) { return document.querySelector(`#result${i}`).innerText }, i);
-        console.log(time);
         let hourIntwentyfourHourFormat = timeFormatChange(time.split(":")[0], time.split(" ")[1]);
         let minute = time.split(":")[1].split(" ")[0];
-        scheduleSleep(minute, hourIntwentyfourHourFormat);
+        await createJobs(minute, hourIntwentyfourHourFormat,i);
     }
-
+    await page.close();
 }
 function timeFormatChange(hour, period) {
-    if (period === "AM" && hour == 12) return Number(hours) - 12;
-    if (period === "PM" && hour < 12) return Number(hour) + 12;
+    if (period === "AM" && hour == 12)
+        return Number(hour) - 12;
+
+    if (period === "PM" && hour < 12)
+        return Number(hour) + 12;
 
     return hour;
 }
+
+async function createJobs(minute, hour,i) {
+    new Promise(function (resolve, reject) {
+        try {
+            sub_process.push(spawn(process.argv[0], [`scheduleSleepNotification.js`, minute, hour], {
+                detached: true,
+                stdio: ["ignore", out, err]
+            }));
+            sub_process[i - 1].unref();
+            console.log("sub-process detached");
+            resolve();
+        }
+        catch (e) {
+            console.log(e);
+            reject();
+        }
+    });
+}
+
+
+
 module.exports = sleepTime;
