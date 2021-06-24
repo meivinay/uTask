@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const scheduleSleep = require("./jobSchedule.js");
+const scheduleSleep = require("./scheduleSleep.js");
 
 async function sleepTime(hour,minute,period) {
     const browser = await puppeteer.launch({ headless: false, defaultViewport: null, args: ["--start-maximized"], sloMo: 500 });

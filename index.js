@@ -5,7 +5,7 @@ let breakTime = require("./breakTime.js");
 let input = process.argv.slice(2);
 let time;
 (async () => {
-    if (input.length > 2) {
+    if (input.length > 2 || input.length ==0) {
         console.log("Command not found");
         return;
     }
