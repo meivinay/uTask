@@ -6,7 +6,7 @@ const login = require("./login.js");
 let wakeupTimings = [];
 
 async function wakeTime() {
-    const browser = await puppeteer.launch({ headless: false, defaultViewport: null, args: ["--start-maximized"], sloMo: 500 });
+    const browser = await puppeteer.launch({ headless: false, defaultViewport: null, args: ["--start-maximized"], slowMo:80 });
     let pages = await browser.pages();
     let page = pages[0];
     await page.goto('https://sleepyti.me/');
@@ -27,7 +27,7 @@ async function wakeTime() {
     if (isSet == true) {
         await setReminder(browser, calendarDateFormat[0], calendarDateFormat[1]);
     }
-   //await page.close();
+   await page.close();
 };
 
 function printTimings(wakeupTimings) {
@@ -94,7 +94,7 @@ async function setReminder(browser, date, time) {
         let newpage = await browser.newPage();
         await newpage.goto("https://www.google.com/calendar/about/");
         await login(newpage);
-        let box = await newpage.$(".WJVfWe.A3o4Oe");
+        let box = await newpage.$('[aria-label="Create"]');
         await box.click();
         await newpage.waitForSelector(".XSQHmd", { visible: true });
         await newpage.waitForSelector("[aria-label='Add title']", { visible: true });
@@ -104,9 +104,9 @@ async function setReminder(browser, date, time) {
         await reminderButton.click();
         await newpage.type("#xStDaIn", date);
         await newpage.type("#xStTiIn", time);
-        resolve();
+        await newpage.click(".uArJ5e.UQuaGc.Y5sE8d.pEVtpe");
+        resolve(newpage.close());
     })
-    // const browser = await puppeteer.launch({ headless: false, defaultViewport: null, args: ["--start-maximized"], sloMo: 500 });
 
 }
 module.exports= wakeTime;
