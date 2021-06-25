@@ -3,8 +3,8 @@ const createNotification = require("./notifier.js");
 let jobs = [];
 let minute = process.argv[2];
 let hour = process.argv[3];
-(async function sleepSchedule(minute, hour) {
-  jobs.push(schedule.scheduleJob(`${minute} ${hour} * * *`, function () {
+(async (minute, hour)=> {
+  jobs.push(schedule.scheduleJob(`${minute} ${hour} * * *`, ()=> {
       createNotification();
       setTimeout(() => process.exit(), 7000);
   }));

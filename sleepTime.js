@@ -4,7 +4,9 @@ const fs = require("fs");
 const { spawn } = require("child_process");
 let sub_process = [];
 const out = fs.openSync("./schedule.log","a");
-const err = fs.openSync("./schedule.log","a")
+const err = fs.openSync("./schedule.log","a");
+
+
 async function sleepTime(hour, minute, period) {
     const browser = await puppeteer.launch({ headless: false, defaultViewport: null, args: ["--start-maximized"], sloMo: 500 });
     let pages = await browser.pages();
@@ -17,7 +19,7 @@ async function sleepTime(hour, minute, period) {
     await page.waitForTimeout(4000);
     await page.waitForSelector("#result4", { visible: true });
     for (let i = 1; i <= 4; i++) {
-        let time = await page.evaluate(function (i) { return document.querySelector(`#result${i}`).innerText }, i);
+        let time = await page.evaluate((i)=> { return document.querySelector(`#result${i}`).innerText }, i);
         let hourIntwentyfourHourFormat = timeFormatChange(time.split(":")[0], time.split(" ")[1]);
         let minute = time.split(":")[1].split(" ")[0];
         await createJobs(minute, hourIntwentyfourHourFormat,i);
@@ -35,7 +37,7 @@ function timeFormatChange(hour, period) {
 }
 
 async function createJobs(minute, hour,i) {
-    new Promise(function (resolve, reject) {
+    new Promise((resolve, reject)=> {
         try {
             sub_process.push(spawn(process.argv[0], [`scheduleSleepNotification.js`, minute, hour], {
                 detached: true,

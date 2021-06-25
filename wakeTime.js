@@ -14,7 +14,7 @@ async function wakeTime() {
     await page.waitForTimeout(4000);
     await page.waitForSelector("#resultNow6", { visible: true });
     for (let i = 1; i <= 6; i++) {
-        let time = await page.evaluate(function (i) { return document.querySelector(`#resultNow${i}`).innerText }, i);
+        let time = await page.evaluate((i)=> { return document.querySelector(`#resultNow${i}`).innerText }, i);
         wakeupTimings.push(time);
     }
     printTimings(wakeupTimings);

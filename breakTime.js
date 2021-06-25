@@ -2,7 +2,7 @@
 async function breakTime(time)
 {
     let finalTime=[];
-     return new Promise(function(resolve,reject)
+     return new Promise((resolve,reject)=>
      {
             if(time.length>8)
             {
