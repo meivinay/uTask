@@ -25,7 +25,7 @@ notifier.on("ok",()=>
 });
 notifier.on("cancel",()=>
 {
-  console.log("cancel is pressed");
+  console.log("Cancel is pressed");
 });
 })();
 

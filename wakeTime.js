@@ -27,6 +27,7 @@ async function wakeTime() {
     if (isSet == true) {
         await setReminder(browser, calendarDateFormat[0], calendarDateFormat[1]);
     }
+    await page.waitForTimeout(1000);
    await page.close();
 };
 
