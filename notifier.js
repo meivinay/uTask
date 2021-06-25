@@ -1,5 +1,5 @@
 const WindowsToaster = require('node-notifier').WindowsToaster;
-function notify()
+(function notify()
 {
 var notifier = new WindowsToaster({
   withFallback: false, // Fallback to Growl or Balloons?
@@ -11,20 +11,22 @@ notifier.notify(
     title: `It is Time to Sleep`, 
    message: " msg", 
     icon: ".//resources//icon.png", 
-    sound: true, 
-    id: undefined, 
-    appID: undefined, 
-    remove: undefined, 
-    install: undefined 
+    sound: true,
+    actions:["Ok","Cancel"] 
   },
   function (error, response) {
-    console.log("Notification Response ==>"+response);
-    if(error)
-    {
+      if(error)
       console.log(error);
-    }
   }
 );
-}
+notifier.on("ok",()=>
+{
+  console.log("Ok is pressed");
+});
+notifier.on("cancel",()=>
+{
+  console.log("cancel is pressed");
+});
+})();
 
-module.exports=notify;
+//module.exports=notify;
