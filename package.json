@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^4.1.1",
+    "inquirer": "^8.1.1",
+    "inquirer-date-prompt": "^2.0.1",
+    "moment": "^2.29.1",
     "node-notifier": "^10.0.0",
     "node-schedule": "^2.0.0",
     "puppeteer": "^10.0.0"
