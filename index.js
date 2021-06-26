@@ -1,11 +1,12 @@
-
 const sleepTime = require("./sleepTime.js");
 const wakeTime = require("./wakeTime.js");
-let breakTime = require("./breakTime.js");
+const breakTime = require("./breakTime.js");
+const launchYT = require("./launchYT.js");
+
 let input = process.argv.slice(2);
 let time;
 (async () => {
-    if (input.length > 2 || input.length ==0) {
+    if (input.length > 2|| input.length ==0) {
         console.log("Command not found");
         return;
     }
@@ -35,6 +36,10 @@ let time;
             }
             else if (input[0] === "-w") {
                 wakeTime();
+            }
+            else if(input[0]==="-yt")
+            {
+               await launchYT(input[1]);
             }
             else {
                 console.log("Not a valid option");
