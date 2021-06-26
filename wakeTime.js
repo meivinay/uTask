@@ -76,7 +76,7 @@ async function getChoice() {
     prompt({
         type: "list",
         name: "choice",
-        message: `Do you want to set Reminder in Google Calendars.${chalk.red('Note=>')} if Yes,you should set a long length notification tone for reminders`,
+        message: `Do you want to set Reminder in Google Calendars.${chalk.red('\nNote=>')} if Yes,you should set a long length notification tone for reminders`,
         choices: ["Yes", "No"]
     })
         .then((answer) => {
