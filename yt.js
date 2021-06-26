@@ -1,14 +1,23 @@
 let pup = require("puppeteer");
-let url=process.argv[2];
+let storePID = require("./storePID.js")
+let url = process.argv[2];
 (async function yt(url) {
-    let browser = await pup.launch({ headless: true, ignoreDefaultArgs: ["--mute-audio"] });
-    let pages = await browser.pages();
-    let page = pages[0];
     try {
-        await page.goto(url);
+        await storePID(process.pid, "youtube");
     }
     catch (e) {
         console.log(e);
+        process.exit();
+    }
+     let browser = await pup.launch({ headless: false, ignoreDefaultArgs: ["--mute-audio"] });
+    let pages = await browser.pages();
+    let page = pages[0];
+    try {
+        console.log(url);
+        await page.goto(url);
+    }
+    catch (e) {
+        console.log("provide URL please");
         process.exit();
     }
     await page.waitForTimeout(5000);
