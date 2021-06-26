@@ -18,13 +18,11 @@ async function wakeTime() {
         wakeupTimings.push(time);
     }
     printTimings(wakeupTimings);
-
-    let userInput = await getUserInput();
-   
-    let calendarDateFormat = await convertUserInput(userInput.Date);
-    console.log(calendarDateFormat);
     let isSet = await getChoice();
     if (isSet == true) {
+        let userInput = await getUserInput();
+        let calendarDateFormat = await convertUserInput(userInput.Date);
+        console.log(calendarDateFormat);
         await setReminder(browser, calendarDateFormat[0], calendarDateFormat[1]);
     }
     await page.waitForTimeout(1000);
