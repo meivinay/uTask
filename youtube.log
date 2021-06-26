@@ -8,3 +8,4 @@ Error: Protocol error (Page.navigate): Invalid parameters Failed to deserialize 
     at Page.goto (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\Page.js:821:53)
     at yt (D:\pep_hack_1\uTask\yt.js:12:20)
     at processTicksAndRejections (internal/process/task_queues.js:93:5)
+https://www.youtube.com/watch?v=R2zXxQHBpd8&list=PLuYF9B-tPehP0OPxcrKNMDG93rSi1W3vQ&index=83

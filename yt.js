@@ -9,7 +9,7 @@ let url = process.argv[2];
         console.log(e);
         process.exit();
     }
-     let browser = await pup.launch({ headless: false, ignoreDefaultArgs: ["--mute-audio"] });
+     let browser = await pup.launch({ headless: true, ignoreDefaultArgs: ["--mute-audio"] });
     let pages = await browser.pages();
     let page = pages[0];
     try {
@@ -34,6 +34,6 @@ let url = process.argv[2];
                 console.log("button not found checking again");
             }
         }
-            , 1020);
+            , 1000);
     })
 })(url);
