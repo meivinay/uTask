@@ -7,6 +7,10 @@ let processName=process.argv[2];
        fs.readFile("processIDs.json","utf8",async (err,data)=>
     {
         let fileData=JSON.parse(data);
+        if(fileData,length)
+        {
+            process.exit();
+        }
         let pid= fileData[0][processName];
         if(pid==undefined)
         {

@@ -7,23 +7,25 @@ async function storePID(pid,processName)
    {
         
         let fileData=JSON.parse(data);
-        if(fileData[0][processName]!=undefined)
+        if(fileData[0][processName]==undefined)
         {
-            reject(process.exit());
+            fileData[0][processName]=pid;
+            
+            fs.writeFile("processIDs.json",JSON.stringify(fileData),(err)=>
+            {
+                if(err)
+                {
+                    reject(err);
+                }
+                else
+                {
+                    resolve();
+                }
+            })
         }
-        fileData[0][processName]=pid;
-        
-        fs.writeFile("processIDs.json",JSON.stringify(fileData),(err)=>
-        {
-            if(err)
-            {
-                reject(err);
-            }
-            else
-            {
-                resolve();
-            }
-        })
+        else{
+        reject(process.exit());
+        }
    })
   })
    

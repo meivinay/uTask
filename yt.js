@@ -9,6 +9,7 @@ let url = process.argv[2];
         console.log(e);
         process.exit();
     }
+    console.log("opening chromium");
      let browser = await pup.launch({ headless: true, ignoreDefaultArgs: ["--mute-audio"] });
     let pages = await browser.pages();
     let page = pages[0];
@@ -21,6 +22,7 @@ let url = process.argv[2];
         process.exit();
     }
     await page.waitForTimeout(5000);
+    await page.waitForSelector("#movie_player",{visible:true});
     await page.click("#movie_player");
     await page.evaluate(() => {
         setInterval(async () => {
