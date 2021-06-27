@@ -4,7 +4,7 @@ let processName=process.argv[2];
 (async (processName)=>
 {
     try{
-       fs.readFile("youtube/processIDs.json","utf8",async (err,data)=>
+       fs.readFile("./jsonFiles/processIDs.json","utf8",async (err,data)=>
     {
         let fileData=JSON.parse(data);
         if(fileData.length==0)
@@ -35,11 +35,11 @@ let processName=process.argv[2];
  })(processName);
 async function deleteKey(processName)
 {
-    fs.readFile("youtube/processIDs.json","utf8",(err,data)=>
+    fs.readFile("./jsonFiles/processIDs.json","utf8",(err,data)=>
     {
         let fileData=JSON.parse(data);
         delete fileData[0][processName];
-        fs.writeFile("youtube/processIDs.json",JSON.stringify(fileData),(err)=>
+        fs.writeFile("./jsonFiles/processIDs.json",JSON.stringify(fileData),(err)=>
         {
             if(err)
             {

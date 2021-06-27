@@ -1,6 +1,6 @@
 const { spawn } = require("child_process");
 const schedule = require('node-schedule');
-const times = require("./times.json");
+const times = require("./jsonFiles/times.json");
 const createNotification = require("./notifier.js");
 
   (async () => {

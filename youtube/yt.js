@@ -1,5 +1,7 @@
- let pup = require("puppeteer");
-let storePID = require("./storePID.js")
+let pup = require("puppeteer");
+let storePID = require("./storePID.js");
+let fs=require("fs");
+
 let url = process.argv[2];
 (async function yt(url) {
     try {
@@ -13,8 +15,21 @@ let url = process.argv[2];
     console.log("opened Chromium");
     let pages = await browser.pages();
     let page = pages[0];
+    page.on("framenavigated",async()=>
+    {
+        let url=[];
+        url.push({"url":page.url()});
+        console.log(1);
+        console.log(`url is ${page.url()}`);
+        fs.writeFile("./jsonFiles/resumePlaylist.json",JSON.stringify(url),(err)=>{
+            if(err)
+            {
+                console.log(err);
+            }
+        });
+       
+    });
     try {
-        console.log(url);
         await page.goto(url);
     }
     catch (e) {
@@ -22,20 +37,15 @@ let url = process.argv[2];
         process.exit();
     }
     await page.waitForTimeout(5000);
-    await page.waitForSelector("#movie_player",{visible:true});
+    await page.waitForSelector("#movie_player", { visible: true });
     await page.click("#movie_player");
     await page.evaluate(() => {
         setInterval(async () => {
 
             let btnFound = document.querySelector(".ytp-ad-skip-button");
             if (btnFound) {
-                console.log("btn found");
                 btnFound.click();
             }
-            else {
-                console.log("button not found checking again");
-            }
-        }
-            , 1000);
+        }, 1000);
     })
 })(url);

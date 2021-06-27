@@ -3,7 +3,7 @@ async function storePID(pid,processName)
 {
   return new Promise((resolve,reject)=>
   {
-    fs.readFile("youtube/processIDs.json","utf8",(err,data)=>
+    fs.readFile("./jsonFiles/processIDs.json","utf8",(err,data)=>
    {
         
         let fileData=JSON.parse(data);
@@ -11,7 +11,7 @@ async function storePID(pid,processName)
         {
             fileData[0][processName]=pid;
             
-            fs.writeFile("youtube/processIDs.json",JSON.stringify(fileData),(err)=>
+            fs.writeFile("./jsonFiles/processIDs.json",JSON.stringify(fileData),(err)=>
             {
                 if(err)
                 {

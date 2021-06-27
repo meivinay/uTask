@@ -9,4 +9,8 @@ scheduleSleepNotification.js
 jobErr.log
 jobOut.log
 youtubErr.log
+resumePlaylist.json
 youtubeOut.log
+processIDs.json
+resumePlaylist.json
+times.json

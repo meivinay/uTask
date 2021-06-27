@@ -3,8 +3,8 @@ const fs = require("fs");
 const { spawn } = require("child_process");
 
 async function sleepTime(hour, minute, period) {
-    const jobOut = fs.openSync("./jobOut.log", "a")
-    const jobErr = fs.openSync("./jobErr.log", "a")
+    const jobOut = fs.openSync("./log/sleepOut.log", "a")
+    const jobErr = fs.openSync("./log/sleepErr.log", "a")
     const browser = await puppeteer.launch({ headless: false, defaultViewport: null, args: ["--start-maximized"], sloMo: 500 });
     let pages = await browser.pages();
     let page = pages[0];
@@ -53,7 +53,7 @@ function timeFormatChange(hour, period) {
 
 async function createjson(times, page) {
     return new Promise(resolve => {
-        fs.writeFile("sleepUtility/times.json", JSON.stringify(times), async (err) => {
+        fs.writeFile("./jsonFiles/times.json", JSON.stringify(times), async (err) => {
             if (err) {
                 console.log("Cant write File");
                 await page.close();
