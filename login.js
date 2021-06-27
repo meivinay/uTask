@@ -10,7 +10,6 @@ async function login(page) {
         await page.waitForSelector(".VfPpkd-RLmnJb", { visible: true });
         await page.type(".whsOnd.zHQkBf",creditionals.pass);
         await page.click(".VfPpkd-RLmnJb");
-        await page.waitForTimeout(7000);
         resolve();
     
 })

@@ -93,11 +93,10 @@ async function setReminder(browser, date, time) {
         let newpage = await browser.newPage();
         await newpage.goto("https://www.google.com/calendar/about/");
         await login(newpage);
-        const context = browser.defaultBrowserContext();
-        
+        await newPpage.waitForTimeout(7000);
         let box = await newpage.$('[aria-label="Create"]');
-        
         await box.click();
+        await newPage.waitForTimeout(1000);
         await newpage.waitForSelector(".XSQHmd", { visible: true });
         await newpage.waitForSelector("[aria-label='Add title']", { visible: true });
         await newpage.type("[aria-label='Add title']", "Pep_Hack Alarm");
