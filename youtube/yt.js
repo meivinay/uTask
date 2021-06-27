@@ -19,15 +19,14 @@ let url = process.argv[2];
     {
         let url=[];
         url.push({"url":page.url()});
-        console.log(1);
-        console.log(`url is ${page.url()}`);
+        // console.log(`url is ${page.url()}`);  //comment out if want to write every visited link to youtubeOut.log
         fs.writeFile("./jsonFiles/resumePlaylist.json",JSON.stringify(url),(err)=>{
             if(err)
             {
                 console.log(err);
             }
+            page.screenshot({path:"./debugYoutube/snap.png"}); // visual of last visited page
         });
-       
     });
     try {
         await page.goto(url);
