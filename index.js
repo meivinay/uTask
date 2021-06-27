@@ -2,7 +2,6 @@ const sleepTime = require("./sleepUtility/sleepTime.js");
 const wakeTime = require("./sleepUtility/wakeTime.js");
 const breakTime = require("./sleepUtility/breakTime.js");
 const launchYT = require("./youtube/launchYT.js");
-
 let input = process.argv.slice(2);
 let time;
 (async () => {
@@ -15,7 +14,6 @@ let time;
         let firstChar = input[0].charAt(0);
         if (firstChar === "-") {
             if (input[0] === "-s") {
-                console.log("option is s");
                 try {
                     time = await breakTime(input[1])
                 }

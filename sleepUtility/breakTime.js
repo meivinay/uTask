@@ -16,7 +16,6 @@ async function breakTime(time)
                 finalTime.push(hour);
                 finalTime.push(minute);
                 finalTime.push(period);
-               // console.log((finalTime+" inside breakTime.js"));
                 resolve(finalTime);
         }
         else

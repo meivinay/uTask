@@ -1,4 +1,4 @@
-let pup = require("puppeteer");
+ let pup = require("puppeteer");
 let storePID = require("./storePID.js")
 let url = process.argv[2];
 (async function yt(url) {
@@ -9,8 +9,8 @@ let url = process.argv[2];
         console.log(e);
         process.exit();
     }
-    console.log("opening chromium");
-     let browser = await pup.launch({ headless: true, ignoreDefaultArgs: ["--mute-audio"] });
+    let browser = await pup.launch({ headless: true, ignoreDefaultArgs: ["--mute-audio"] });
+    console.log("opened Chromium");
     let pages = await browser.pages();
     let page = pages[0];
     try {
