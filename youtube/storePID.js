@@ -3,7 +3,7 @@ async function storePID(pid,processName)
 {
   return new Promise((resolve,reject)=>
   {
-    fs.readFile("processIDs.json","utf8",(err,data)=>
+    fs.readFile("youtube/processIDs.json","utf8",(err,data)=>
    {
         
         let fileData=JSON.parse(data);
@@ -11,7 +11,7 @@ async function storePID(pid,processName)
         {
             fileData[0][processName]=pid;
             
-            fs.writeFile("processIDs.json",JSON.stringify(fileData),(err)=>
+            fs.writeFile("youtube/processIDs.json",JSON.stringify(fileData),(err)=>
             {
                 if(err)
                 {
@@ -24,6 +24,7 @@ async function storePID(pid,processName)
             })
         }
         else{
+            console.log("already running");
         reject(process.exit());
         }
    })

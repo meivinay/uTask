@@ -1,0 +1,65 @@
+internal/modules/cjs/loader.js:883
+  throw err;
+  ^
+
+Error: Cannot find module 'D:\pep_hack_1\uTask\yt.js'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:880:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:725:27)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:72:12)
+    at internal/main/run_main_module.js:17:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+undefined:1
+undefined
+^
+
+SyntaxError: Unexpected token u in JSON at position 0
+    at JSON.parse (<anonymous>)
+    at ReadFileContext.callback (D:\pep_hack_1\uTask\youtube\storePID.js:9:27)
+    at FSReqCallback.readFileAfterOpen [as oncomplete] (fs.js:273:13)
+undefined:1
+undefined
+^
+
+SyntaxError: Unexpected token u in JSON at position 0
+    at JSON.parse (<anonymous>)
+    at ReadFileContext.callback (D:\pep_hack_1\uTask\youtube\storePID.js:9:27)
+    at FSReqCallback.readFileAfterOpen [as oncomplete] (fs.js:273:13)
+undefined:1
+undefined
+^
+
+SyntaxError: Unexpected token u in JSON at position 0
+    at JSON.parse (<anonymous>)
+    at ReadFileContext.callback (D:\pep_hack_1\uTask\youtube\storePID.js:9:27)
+    at FSReqCallback.readFileAfterOpen [as oncomplete] (fs.js:273:13)
+undefined:1
+undefined
+^
+
+SyntaxError: Unexpected token u in JSON at position 0
+    at JSON.parse (<anonymous>)
+    at ReadFileContext.callback (D:\pep_hack_1\uTask\youtube\storePID.js:9:27)
+    at FSReqCallback.readFileAfterOpen [as oncomplete] (fs.js:273:13)
+already running
+opening chromium
+https://www.youtube.com/watch?v=R2zXxQHBpd8&list=PLuYF9B-tPehP0OPxcrKNMDG93rSi1W3vQ&index=83
+undefined:1
+
+
+
+SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at D:\pep_hack_1\uTask\youtube\storePID.js:9:27
+    at FSReqCallback.readFileAfterClose [as oncomplete] (internal/fs/read_file_context.js:63:3)
+undefined:1
+
+
+
+SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at D:\pep_hack_1\uTask\youtube\storePID.js:9:27
+    at FSReqCallback.readFileAfterClose [as oncomplete] (internal/fs/read_file_context.js:63:3)
+opening chromium
+https://www.youtube.com/watch?v=R2zXxQHBpd8&list=PLuYF9B-tPehP0OPxcrKNMDG93rSi1W3vQ&index=83

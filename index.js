@@ -1,7 +1,7 @@
-const sleepTime = require("./sleepTime.js");
-const wakeTime = require("./wakeTime.js");
-const breakTime = require("./breakTime.js");
-const launchYT = require("./launchYT.js");
+const sleepTime = require("./sleepUtility/sleepTime.js");
+const wakeTime = require("./sleepUtility/wakeTime.js");
+const breakTime = require("./sleepUtility/breakTime.js");
+const launchYT = require("./youtube/launchYT.js");
 
 let input = process.argv.slice(2);
 let time;

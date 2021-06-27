@@ -39,7 +39,7 @@ function timeFormatChange(hour, period) {
 async function createJobs(minute, hour,i) {
     new Promise((resolve, reject)=> {
         try {
-            sub_process.push(spawn(process.argv[0], [`scheduleSleepNotification.js`, minute, hour], {  //create scheduled notification using schedulesleepnotification.jsfor sleep and detach from main process
+            sub_process.push(spawn(process.argv[0], [`sleepUtility/scheduleSleepNotification.js`, minute, hour], {  //create scheduled notification using schedulesleepnotification.jsfor sleep and detach from main process
                 detached: true,
                 stdio: ["ignore", out, err]
             }));

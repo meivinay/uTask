@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 const inquirer = require("inquirer");
 const moment = require("moment");
 const chalk = require("chalk");
-const login = require("./login.js");
+const login = require("../login.js");
 let wakeupTimings = [];
 
 async function wakeTime() {
@@ -93,13 +93,23 @@ async function setReminder(browser, date, time) {
         let newpage = await browser.newPage();
         await newpage.goto("https://www.google.com/calendar/about/");
         await login(newpage);
+        const context = browser.defaultBrowserContext();
+        
         let box = await newpage.$('[aria-label="Create"]');
+        
         await box.click();
         await newpage.waitForSelector(".XSQHmd", { visible: true });
         await newpage.waitForSelector("[aria-label='Add title']", { visible: true });
         await newpage.type("[aria-label='Add title']", "Pep_Hack Alarm");
         let tabList = await newpage.$$(".XSQHmd");
+        
         let reminderButton = tabList[2];
+        if(reminderButton==undefined)
+        {
+            console.log("please try again");
+            process.exit();
+        }
+        
         await reminderButton.click();
         await newpage.type("#xStDaIn", date);
         await newpage.type("#xStTiIn", time);
