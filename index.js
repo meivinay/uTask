@@ -23,11 +23,9 @@ let time;
                     return;
                 }
                 if (isTimeValid(time)) {
-                    console.log("after time validation");
                     let hour = Number(time[0]);
                     let minute = roundoffMinutes(Number(time[1]));
                     let period = time[2].toUpperCase();
-                    console.log(hour,minute,period);
                     sleepTime(hour, minute, period);
                 }
                 else {
@@ -52,7 +50,6 @@ let time;
 })();
 
 function isTimeValid(time) {
-    console.log("validating time");
     let isHourValid = false;
     let isMinuteValid = false;
     let isPeriodvalid = false;

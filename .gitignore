@@ -3,3 +3,8 @@ schedule.log
 logInfo.js
 youtube.log
 test.js
+scheduleErr.log
+scheduleOut.log
+scheduleSleepNotification.js
+jobErr.log
+jobOut.log
