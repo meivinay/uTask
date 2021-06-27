@@ -63,3 +63,34 @@ SyntaxError: Unexpected end of JSON input
     at FSReqCallback.readFileAfterClose [as oncomplete] (internal/fs/read_file_context.js:63:3)
 opening chromium
 https://www.youtube.com/watch?v=R2zXxQHBpd8&list=PLuYF9B-tPehP0OPxcrKNMDG93rSi1W3vQ&index=83
+opening chromium
+https://www.youtube.com/
+(node:12036) UnhandledPromiseRejectionWarning: TimeoutError: waiting for selector `#movie_player` failed: timeout 30000ms exceeded
+    at new WaitTask (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\DOMWorld.js:509:34)
+    at DOMWorld.waitForSelectorInPage (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\DOMWorld.js:420:26)
+    at Object.internalHandler.waitFor (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\QueryHandler.js:31:77)
+    at DOMWorld.waitForSelector (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\DOMWorld.js:313:29)
+    at Frame.waitForSelector (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\FrameManager.js:841:51)
+    at Page.waitForSelector (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\Page.js:1335:33)
+    at yt (D:\pep_hack_1\uTask\youtube\yt.js:25:16)
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12036) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
+(node:12036) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+opening chromium
+https://www.youtube.com/
+provide URL please
+already running
+already running
+opening chromium
+https://www.youtube.com/
+(node:23636) UnhandledPromiseRejectionWarning: TimeoutError: waiting for selector `#movie_player` failed: timeout 30000ms exceeded
+    at new WaitTask (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\DOMWorld.js:509:34)
+    at DOMWorld.waitForSelectorInPage (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\DOMWorld.js:420:26)
+    at Object.internalHandler.waitFor (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\QueryHandler.js:31:77)
+    at DOMWorld.waitForSelector (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\DOMWorld.js:313:29)
+    at Frame.waitForSelector (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\FrameManager.js:841:51)
+    at Page.waitForSelector (D:\pep_hack_1\uTask\node_modules\puppeteer\lib\cjs\puppeteer\common\Page.js:1335:33)
+    at yt (D:\pep_hack_1\uTask\youtube\yt.js:25:16)
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23636) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
+(node:23636) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.

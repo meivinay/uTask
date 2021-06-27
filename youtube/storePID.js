@@ -7,7 +7,7 @@ async function storePID(pid,processName)
    {
         
         let fileData=JSON.parse(data);
-        if(fileData[0][processName]==undefined)
+        if(fileData[0][processName]==undefined || require("is-running")(fileData[0][processName])==false)
         {
             fileData[0][processName]=pid;
             

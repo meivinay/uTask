@@ -15,6 +15,7 @@ let time;
         let firstChar = input[0].charAt(0);
         if (firstChar === "-") {
             if (input[0] === "-s") {
+                console.log("option is s");
                 try {
                     time = await breakTime(input[1])
                 }

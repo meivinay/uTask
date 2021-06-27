@@ -3,7 +3,7 @@ const fs = require("fs");
 const { spawn } = require("child_process");
 const jobOut = fs.openSync("./jobOut.log", "a")
 const jobErr = fs.openSync("./jobErr.log", "a")
-
+console.log("sleep time");
 
 async function sleepTime(hour, minute, period) {
     const browser = await puppeteer.launch({ headless: false, defaultViewport: null, args: ["--start-maximized"], sloMo: 500 });
