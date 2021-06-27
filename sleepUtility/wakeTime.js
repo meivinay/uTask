@@ -3,6 +3,8 @@ const inquirer = require("inquirer");
 const moment = require("moment");
 const chalk = require("chalk");
 const login = require("../login.js");
+const readline = require('readline');
+
 let wakeupTimings = [];
 
 async function wakeTime() {
@@ -22,13 +24,26 @@ async function wakeTime() {
     if (isSet == true) {
         let userInput = await getUserInput();
         let calendarDateFormat = await convertUserInput(userInput.Date);
-        console.log(calendarDateFormat);
-        await setReminder(browser, calendarDateFormat[0], calendarDateFormat[1]);
+        console.log(`Creating Reminder for  ${calendarDateFormat[1]} , ${calendarDateFormat[0]}`);
+        let reminderTitle=await getReminderTitle();
+        await setReminder(browser, calendarDateFormat[0], calendarDateFormat[1],reminderTitle);
     }
     await page.waitForTimeout(1000);
    await page.close();
 };
-
+async function getReminderTitle() {
+    return new Promise(resolve => {    
+        const rl = readline.createInterface({
+            input:  process.stdin,
+            output: process.stdout
+        });
+        rl.question("Please Enter Reminder Title ", (answer) => {
+            resolve(answer);
+            console.log("Title is ", answer);
+            rl.close();
+        });
+    })
+}
 function printTimings(wakeupTimings) {
     console.log("You should set Alarm for any of these Timings");
     for (let i = 0; i < wakeupTimings.length; i++) {
@@ -88,7 +103,7 @@ async function getChoice() {
         })
 }) 
 }
-async function setReminder(browser, date, time) {
+async function setReminder(browser, date, time,reminderTitle) {
     return new Promise(async (resolve, reject) => {
         let newpage = await browser.newPage();
         await newpage.goto("https://www.google.com/calendar/about/");
@@ -99,7 +114,7 @@ async function setReminder(browser, date, time) {
         await newpage.waitForTimeout(1000);
         await newpage.waitForSelector(".XSQHmd", { visible: true });
         await newpage.waitForSelector("[aria-label='Add title']", { visible: true });
-        await newpage.type("[aria-label='Add title']", "Pep_Hack Alarm");
+        await newpage.type("[aria-label='Add title']", reminderTitle);
         let tabList = await newpage.$$(".XSQHmd");
         
         let reminderButton = tabList[2];
