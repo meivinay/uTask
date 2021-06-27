@@ -1,7 +1,7 @@
 const { spawn } = require("child_process");
 const fs = require("fs");
 async function launch(url) {
-    const err = fs.openSync("./log/youtubErr.log", "a");
+    const err = fs.openSync("./log/youtubeErr.log", "a");
     const out = fs.openSync("./log/youtubeOut.log", "a");
     new Promise((resolve, reject) => {
         try {
@@ -13,7 +13,7 @@ async function launch(url) {
             resolve();
         }
         catch (e) {
-            console.log(e);
+            console.out(e);
             reject();
         }
     });

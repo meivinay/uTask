@@ -5,14 +5,12 @@ let fs=require("fs");
 let url = process.argv[2];
 (async function yt(url) {
     try {
-        await storePID(process.pid, "youtube");
+        await storePID(process.pid,"youtube");
     }
     catch (e) {
-        console.log(e);
         process.exit();
     }
     let browser = await pup.launch({ headless: true, ignoreDefaultArgs: ["--mute-audio"] });
-    console.log("opened Chromium");
     let pages = await browser.pages();
     let page = pages[0];
     page.on("framenavigated",async()=>
@@ -23,7 +21,7 @@ let url = process.argv[2];
         fs.writeFile("./jsonFiles/resumePlaylist.json",JSON.stringify(url),(err)=>{
             if(err)
             {
-                console.log(err);
+                console.error(err);
             }
             page.screenshot({path:"./debugYoutube/snap.png"}); // visual of last visited page
         });
@@ -32,7 +30,7 @@ let url = process.argv[2];
         await page.goto(url);
     }
     catch (e) {
-        console.log("provide URL please");
+        console.error("provide URL please");
         process.exit();
     }
     await page.waitForTimeout(5000);

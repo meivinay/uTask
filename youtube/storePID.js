@@ -24,8 +24,8 @@ async function storePID(pid,processName)
             })
         }
         else{
-            console.log("already running");
-        reject(process.exit());
+            console.error(`${processName} is already running. Use killTask.js <"processName"> to kill running process`);
+            reject();
         }
    })
   })
