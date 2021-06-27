@@ -8,3 +8,5 @@ scheduleOut.log
 scheduleSleepNotification.js
 jobErr.log
 jobOut.log
+youtubErr.log
+youtubeOut.log
