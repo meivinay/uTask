@@ -19,7 +19,9 @@ let processName=process.argv[2];
             console.log("There is no Task with this name");
             process.exit();
         }
-       await taskkill(pid,{force:true});
+        if(require("is-running")(pid))
+        await taskkill(pid,{force:true});
+        
         deleteKey(processName);
     });
     }
