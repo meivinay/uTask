@@ -23,7 +23,9 @@ let url = process.argv[2];
             {
                 console.error(err);
             }
-            page.screenshot({path:"./debugYoutube/snap.png"}); // visual of last visited page
+            setTimeout(()=>{
+                page.screenshot({path:"./debugYoutube/snap.png"}); // visual of last visited page
+            }, 2000);
         });
     });
     try {
