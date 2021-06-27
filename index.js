@@ -2,6 +2,7 @@ const sleepTime = require("./sleepUtility/sleepTime.js");
 const wakeTime = require("./sleepUtility/wakeTime.js");
 const breakTime = require("./sleepUtility/breakTime.js");
 const launchYT = require("./youtube/launchYT.js");
+const recent=require("./jsonFiles/resumePlaylist.json");
 let input = process.argv.slice(2);
 let time;
 (async () => {
@@ -36,6 +37,10 @@ let time;
             }
             else if(input[0]==="-yt")
             {
+                if(input[1]==="resume")
+                {
+                    await launchYT(recent[0]["url"])
+                }
                await launchYT(input[1]);
             }
             else {
