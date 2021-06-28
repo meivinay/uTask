@@ -3,9 +3,9 @@ async function storePID(pid,processName)
 {
   return new Promise((resolve,reject)=>
   {
-    fs.readFile("./jsonFiles/processIDs.json","utf8",(err,data)=>
+    fs.readFile("./jsonFiles/processIDs.json","utf8",(err,data)=>   //ye path relative to index.js hai ,,, index.js->launchYT.js->yt.js->storPID.js detach hone ke baad bhi usne apna relative path nhi bnaya, apne parent ka relative path bnaya
    {
-        
+
         let fileData=JSON.parse(data);
         if(fileData[0][processName]==undefined || require("is-running")(fileData[0][processName])==false)
         {

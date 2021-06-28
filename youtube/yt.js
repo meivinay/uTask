@@ -1,8 +1,10 @@
-let pup = require("puppeteer");
-let storePID = require("./storePID.js");
-let fs = require("fs");
-let showNotification = require("./../sleepUtility/notifier");
+const pup = require("puppeteer");
+const storePID = require("./storePID.js");
+const fs = require("fs");
+const showNotification = require("./../sleepUtility/notifier");
+//const startWatching=require("./watcher.js");
 let url = process.argv[2];
+
 (async function yt(url) {
     try {
         await storePID(process.pid, "youtube");
@@ -33,6 +35,10 @@ let url = process.argv[2];
         console.error("provide URL please");
         process.exit();
     }
+
+  // startWatching(page);
+    
+   
     await page.waitForTimeout(2000);
     try {
         await getThumnail(browser, page);
@@ -59,7 +65,6 @@ let url = process.argv[2];
         }, 1000);
     })
 })(url);
-
 async function getThumnail(browser, page) {
     return new Promise(async (resolve, reject) => {
         let thumbnailLink = await page.evaluate(() => {
@@ -80,3 +85,6 @@ async function getThumnail(browser, page) {
 
     })
 }
+
+
+
