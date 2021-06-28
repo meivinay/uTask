@@ -21,8 +21,14 @@ const createNotification = require("./notifier.js");
 async function scheduleNotification(properties, minute, hour) {
   return new Promise((resolve) => {
     schedule.scheduleJob(`${minute} ${hour} * * *`, async () => {
-      await createNotification(properties);  //show notification at specified time and exit after 7 seconds
-      resolve();
+     try{ await createNotification(properties);  //show notification at specified time and exit after 7 seconds
+          resolve();
+
+    }
+    catch(e)
+    {
+      process.exit();
+    }
     });
   })
 }
