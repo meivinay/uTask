@@ -2,8 +2,9 @@ const pup = require("puppeteer");
 const storePID = require("./storePID.js");
 const fs = require("fs");
 const showNotification = require("./../sleepUtility/notifier");
-//const startWatching=require("./watcher.js");
-let url = process.argv[2];
+const startWatching = require("./watcher.js");
+const chokidar = require("chokidar");
+const getThumbnail=require("./getThumbnail.js");
 
 (async function yt(url) {
     try {
@@ -18,7 +19,7 @@ let url = process.argv[2];
     page.on("framenavigated", async () => {
         let url = [];
         url.push({ "url": page.url() });
-        // console.log(`url is ${page.url()}`);  //comment out if want to write every visited link to youtubeOut.log
+        // console.log(`Current Url is ${page.url()}`);  //comment out if want to write every visited link to youtubeOut.log
         fs.writeFile("./jsonFiles/resumePlaylist.json", JSON.stringify(url), (err) => {
             if (err) {
                 console.error(err);
@@ -32,17 +33,19 @@ let url = process.argv[2];
         await page.goto(url);
     }
     catch (e) {
-        console.error("provide URL please");
+        console.error("Invalid URL/Internet is Slow");
         process.exit();
     }
-
-  // startWatching(page);
-    
-   
+    const watcher = chokidar.watch("./jsonFiles/controls.json", { persistent: true, awaitWriteFinish: true });
+    startWatching(page, watcher);
+    browser.on('disconnected', () =>   // close watcher when browser close , so node server can stop watching and let process exit 
+    {
+        watcher.close();
+    })
     await page.waitForTimeout(2000);
     try {
-        await getThumnail(browser, page);
-        let title=await page.evaluate(()=>{return document.querySelector("h1>.style-scope.ytd-video-primary-info-renderer").innerText});
+        await getThumbnail(browser, page);
+        let title = await page.evaluate(() => { return document.querySelector("h1>.style-scope.ytd-video-primary-info-renderer").innerText });
         let notificationProperties = {
             title: "Youtube Now Playing",
             message: title,
@@ -57,34 +60,15 @@ let url = process.argv[2];
     await page.waitForSelector("#movie_player", { visible: true });
     await page.click("#movie_player");
     await page.evaluate(async () => {
-        setInterval( async () => {
+        setInterval(async () => {
             let btnFound = document.querySelector(".ytp-ad-skip-button");
             if (btnFound) {
                 btnFound.click();
             }
         }, 1000);
     })
-})(url);
-async function getThumnail(browser, page) {
-    return new Promise(async (resolve, reject) => {
-        let thumbnailLink = await page.evaluate(() => {
-            let aTag = document.querySelector('[rel="image_src"]');
-            let link = aTag.getAttribute("href");
-            return link
-        })
-        let newpage = await browser.newPage();
-        try {
-            await newpage.goto(thumbnailLink);
-        }
-        catch (e) {
-            reject(e);
-        }
-        await newpage.screenshot({ path: "./resources/thumbnail.png" });
-        await newpage.close();
-        resolve();
+})(process.argv[2]);
 
-    })
-}
 
 
 
