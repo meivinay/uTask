@@ -25,10 +25,11 @@ const getThumbnail = require("./getThumbnail.js");
             if (err) {
                 console.error(err);
             }
-            setTimeout(() => {
-                page.screenshot({ path: "./debugYoutube/snap.png" }); // visual of last visited page
-            }, 2000);
         });
+        setTimeout(() => {
+            page.screenshot({ path: "./debugYoutube/youtube.png" }); // visual of last visited page
+        }, 2000);
+
     });
     try {
         await page.goto(url);
