@@ -2,7 +2,7 @@ const fs = require("fs");
 
 async function watcher(page, watcher) {
     watcher.on("change", async (path) => {
-       // console.log("executing command on youtube..");
+        // console.log("executing command on youtube..");
         try {
             let data = await readFile();
             let arr = [];

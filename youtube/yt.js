@@ -1,16 +1,17 @@
 const pup = require("puppeteer");
-const storePID = require("./storePID.js");
+const storePID = require("../storePID.js");
 const fs = require("fs");
 const showNotification = require("./../sleepUtility/notifier");
 const startWatching = require("./watcher.js");
 const chokidar = require("chokidar");
-const getThumbnail=require("./getThumbnail.js");
+const getThumbnail = require("./getThumbnail.js");
 
 (async function yt(url) {
     try {
         await storePID(process.pid, "youtube");
     }
     catch (e) {
+        console.error("Could Not store Process ID");
         process.exit();
     }
     let browser = await pup.launch({ headless: true, ignoreDefaultArgs: ["--mute-audio"] });

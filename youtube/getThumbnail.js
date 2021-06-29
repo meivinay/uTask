@@ -17,4 +17,4 @@ async function getThumbnail(browser, page) {
         resolve();
     })
 }
-module.exports=getThumbnail;
+module.exports = getThumbnail;

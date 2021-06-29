@@ -3,7 +3,7 @@ const wakeTime = require("./sleepUtility/wakeTime.js");
 const breakTime = require("./sleepUtility/breakTime.js");
 const launchYT = require("./youtube/launchYT.js");
 //const recent = require("./jsonFiles/resumePlaylist.json"); // this is causing bugs ,so using fsread
-const fs=require("fs");
+const fs = require("fs");
 let input = process.argv.slice(2);
 let time;
 (async () => {
@@ -38,13 +38,12 @@ let time;
             }
             else if (input[0] === "-yt") {
                 if (input[1] === "resume") {
-                        fs.readFile("./jsonFiles/resumePlaylist.json","utf8",async (err,data)=>
-                        {
-                            let recent=JSON.parse(data)[0];
-                            await launchYT(recent["url"]);
-                        })
+                    fs.readFile("./jsonFiles/resumePlaylist.json", "utf8", async (err, data) => {
+                        let recent = JSON.parse(data)[0];
+                        await launchYT(recent["url"]);
+                    })
                 }
-                else{
+                else {
                     await launchYT(input[1]);
                 }
             }
