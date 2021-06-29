@@ -105,11 +105,11 @@ async function getChoice() {
 async function setReminder(browser, date, time, reminderTitle) {
     return new Promise(async (resolve, reject) => {
         let newpage = await browser.newPage();
-        newpage.on("framenavigated", async () => {
-            setTimeout(() => {
-                newpage.screenshot({ path: "./debugYoutube/calendar.png" }); // visual of last visited page
-            }, 2000);
-        });
+        // newpage.on("framenavigated", async () => {
+        //     setTimeout(() => {
+        //         newpage.screenshot({ path: "./debugYoutube/calendar.png" }); // visual of last visited page for debugging purposes
+        //     }, 2000);
+        // });
         await newpage.goto("https://www.google.com/calendar/about/");
         await login(newpage);
         await newpage.waitForTimeout(7000);

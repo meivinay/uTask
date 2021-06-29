@@ -1,4 +1,3 @@
-const taskkill = require("taskkill");
 const fs = require("fs");
 let processName = process.argv[2];
 (async (processName) => {
@@ -16,7 +15,7 @@ let processName = process.argv[2];
                 process.exit();
             }
             if (require("is-running")(pid)) {
-                await taskkill(pid, { force: true });
+                process.kill(pid);
                 console.log(`${processName} Terminated`);
             }
             deleteKey(processName);  // 

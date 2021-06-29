@@ -1,9 +1,9 @@
 const { spawn } = require("child_process");
 const schedule = require('node-schedule');
-const times = require("./../jsonFiles/times.json");
+// const times = require("./../jsonFiles/times.json");
 const createNotification = require("./notifier.js");
 const storePID = require("./../storePID.js");
-
+const fs = require("fs");
 (async () => {
   try {
     await storePID(process.pid, "sleepTime");
@@ -11,7 +11,15 @@ const storePID = require("./../storePID.js");
   catch (e) {
     process.exit();
   }
-
+  let times;
+  try {
+    times = await readFile();
+  }
+  catch (e) {
+    console.error("Could not Read times.json file to Schedule Job\n Error is ====>\n"+e);
+    process.exit();
+  }
+  console.log(times);
   let notificationProperties = {    //properties of notification to show
     title: `It is Time to Sleep`,
     message: " msg",
@@ -27,7 +35,7 @@ const storePID = require("./../storePID.js");
 })();
 
 async function scheduleNotification(properties, minute, hour) {
-  return new Promise((resolve) => {
+  return new Promise(async (resolve) => {
     schedule.scheduleJob(`${minute} ${hour} * * *`, async () => { // job is scheduled for specified time
       try {
         await createNotification(properties);  //show notification at specified time .. this will wait here till notification return resolve
@@ -38,5 +46,16 @@ async function scheduleNotification(properties, minute, hour) {
         process.exit();
       }
     });
+  })
+}
+
+async function readFile() {
+  return new Promise(async (resolve, reject) => {
+    fs.readFile("./jsonFiles/times.json", "utf8", (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(JSON.parse(data));
+    })
   })
 }
