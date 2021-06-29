@@ -28,8 +28,10 @@ async function wakeTime() {
         let reminderTitle = await getReminderTitle();
         await setReminder(browser, calendarDateFormat[0], calendarDateFormat[1], reminderTitle);
     }
-    await page.waitForTimeout(1000);
-    await page.close();
+
+    await page.waitForTimeout(3000);
+    console.log("Reminder is Set");
+    await browser.close();
 };
 async function getReminderTitle() {
     return new Promise(resolve => {
@@ -96,10 +98,13 @@ async function getChoice() {
             .then((answer) => {
                 if (answer.choice === "Yes") {
                     resolve(true);
-                } else {
+                } 
+                else 
+                {
                     reject(process.exit());
                 }
-            })
+            }
+            )
     })
 }
 async function setReminder(browser, date, time, reminderTitle) {
@@ -107,9 +112,9 @@ async function setReminder(browser, date, time, reminderTitle) {
         let newpage = await browser.newPage();
         // newpage.on("framenavigated", async () => {
         //     setTimeout(() => {
-        //         newpage.screenshot({ path: "./debugYoutube/calendar.png" }); // visual of last visited page for debugging purposes
+        //         newpage.screenshot({ path: "./debugYoutube/calendar.png" }); // visual of last visited page for debugging purposes , use cautious , may be code not was working because of this
         //     }, 2000);
-        // });
+        // }); /
         await newpage.goto("https://www.google.com/calendar/about/");
         await login(newpage);
         await newpage.waitForTimeout(7000);
@@ -117,23 +122,35 @@ async function setReminder(browser, date, time, reminderTitle) {
         await box.click();
         await newpage.waitForTimeout(1000);
         await newpage.waitForSelector(".XSQHmd", { visible: true });
+        await newpage.waitForTimeout(1000);
+
         await newpage.waitForSelector("[aria-label='Add title']", { visible: true });
         console.log("typing reminder Title");
         await newpage.type("[aria-label='Add title']", reminderTitle);
         let tabList = await newpage.$$(".XSQHmd");
+        await newpage.waitForTimeout(1000);
 
         let reminderButton = tabList[2]; //choosing reminder out of event,task,reminder
         if (reminderButton == undefined) {
             console.log("please try again");
             process.exit();
         }
+        await newpage.waitForTimeout(1000);
 
         await reminderButton.click();
+        await newpage.waitForTimeout(1000);
+
         console.log("Setting Date & Time");
+        //await newpage.screenshot({path:"./xt.png"})
         await newpage.type("#xStDaIn", date);
+        await newpage.waitForTimeout(1000);
+        //await newpage.screenshot({path:"./date.png"})
         await newpage.type("#xStTiIn", time);
+        await newpage.waitForTimeout(1000);
+        // await newpage.screenshot({path:"./time.png"})
         await newpage.click(".uArJ5e.UQuaGc.Y5sE8d.pEVtpe");
-        resolve(newpage.close());
+        //await newpage.screenshot({path:"./saved.png"});
+        resolve();
     })
 
 }

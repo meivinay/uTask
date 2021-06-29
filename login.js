@@ -2,19 +2,20 @@ const creditionals = require("./logInfo.js");
 async function login(page) {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log("trying to Login To Google Calendar");
             await page.waitForTimeout(4000);
             await page.click(".signin-btn");
-            await page.waitForSelector("#identifierId", { visible: true })
-            console.log("typing User Name");
-            await page.type("#identifierId", creditionals.userName);
-            await page.click(".VfPpkd-dgl2Hf-ppHlrf-sM5MNb");
-            await page.waitForTimeout(3000);
-            await page.waitForSelector(".VfPpkd-RLmnJb", { visible: true });
-            console.log("typing Password");
-            await page.type(".whsOnd.zHQkBf", creditionals.pass);
-            await page.click(".VfPpkd-RLmnJb");
-            console.log("Logged in");
+            let mail = creditionals.userName;
+            let pass = creditionals.pass;
+            for (let i = 0; i < mail.length; i++) {
+                await page.keyboard.press(mail.charAt(i), { delay: 346 });
+            }
+            await page.keyboard.press("Enter", { delay: 200 });
+            await page.waitForTimeout(2000);
+            for (let i = 0; i < pass.length; i++) {
+                await page.keyboard.press(pass.charAt(i), { delay: 616 });
+            }
+            await page.keyboard.press("Enter", { delay: 200 });
+            await page.waitForTimeout(4000);
             resolve();
         }
         catch (e) {
