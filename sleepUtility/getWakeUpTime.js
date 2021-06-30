@@ -1,9 +1,7 @@
 const puppeteer = require("puppeteer");
 const chalk = require("chalk");
 const inquirer = require("inquirer");
-//const getReminderDateTime = require("./../calendar/reminderDate.js");
 const getReminderTitle=require("./../calendar/reminderTitle.js");
-const convertDateTime = require("./../calendar/convertDate.js");
 const login=require("./../calendar/login.js")
 async function wakeTime() {
     const browser = await puppeteer.launch({ headless: false, defaultViewport: null, args: ["--start-maximized"], slowMo: 80 });
@@ -128,4 +126,17 @@ async function getReminderDateTime() {
     })
 }
 
+async function convertDateTime(userDate) {
+    return new Promise((resolve, reject) => {
+        let dateTime = moment(userDate);
+        dateTime=dateTime.add(20,"m");
+        dateTime = dateTime.format("MMM D YYYY,h:mma");
+        date = dateTime.split(",")[0].trim();
+        time = dateTime.split(",")[1].trim();
+        let finalDateTime = [];
+        finalDateTime.push(date);
+        finalDateTime.push(time);
+        resolve(finalDateTime);
+    })
+}
 module.exports = wakeTime;
