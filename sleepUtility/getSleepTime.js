@@ -1,8 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require("fs");
 const { spawn } = require("child_process");
-const { min } = require('moment');
-
+const moment=require("moment");
 async function sleepTime(hour, minute, period) {
     const browser = await puppeteer.launch({ headless: false });
     let pages = await browser.pages();
@@ -15,17 +14,26 @@ async function sleepTime(hour, minute, period) {
     }
     await page.select("#minute", `${minute}`);
     await page.select("#ampm", `${period}`);
-    await page.waitForTimeout(100000);
+    await page.waitForTimeout(1000);
     await page.click("#calculate");
     await page.waitForTimeout(4000);
     await page.waitForSelector("#result4", { visible: true });
     let times = [];
     for (let i = 1; i <= 4; i++) {
         let time = await page.evaluate((i) => { return document.querySelector(`#result${i}`).innerText }, i);
-        let hourIntwentyfourHourFormat = (timeFormatChange(time.split(":")[0], time.split(" ")[1])); // extract hour and period from scrapped time and change to 24 hour format
+    //     time=moment(time) //wrape with moment module to manipulate time
+    //    time=time.
+        let hour = Number((timeFormatChange(time.split(":")[0], time.split(" ")[1]))); // extract hour and period from scrapped time and change to 24 hour format
         let minute = Number(time.split(":")[1].split(" ")[0]); //extracct minute from scrapped time
+        if((minute-20)>=0){         //show notification 20 minutes before scrapped time
+            minute=minute-20;
+            }
+            else{
+                hour=hour-1;
+                minute=60+(minute-20);
+            }
         let obj = {
-            "hour": hourIntwentyfourHourFormat,
+            "hour": hour,
             "minute": minute
         }
         times.push(obj);

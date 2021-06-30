@@ -33,7 +33,6 @@ let input = process.argv.slice(2);
                 if (isTimeValid(time)) {
                     let hour = Number(time[0]);
                     let minute = roundoffMinutes(Number(time[1]));
-                    console.log(minute);
                     let period = time[2].toUpperCase();
                     getSleepTime(hour, minute, period);
                 }
