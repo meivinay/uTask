@@ -1,8 +1,8 @@
 const { spawn } = require("child_process");
 const schedule = require('node-schedule');
 // const times = require("./../jsonFiles/times.json");
-const createNotification = require("./notifier.js");
-const storePID = require("./../storePID.js");
+const createNotification = require("./showNotification.js");
+const storePID = require("./../detachedProcessHandlers/storePID.js");
 const fs = require("fs");
 (async () => {
   try {

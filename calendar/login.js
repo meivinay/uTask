@@ -1,4 +1,5 @@
 const creditionals = require("./logInfo.js");
+
 async function login(page) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -6,6 +7,7 @@ async function login(page) {
             await page.click(".signin-btn");
             let mail = creditionals.userName;
             let pass = creditionals.pass;
+            await page.waitForTimeout(2000);
             for (let i = 0; i < mail.length; i++) {
                 await page.keyboard.press(mail.charAt(i), { delay: 346 });
             }

@@ -1,6 +1,6 @@
 const fs = require("fs");
-let processName = process.argv[2];
-(async (processName) => {
+
+async function killtask(processName) {
     try {
         fs.readFile("./jsonFiles/processIDs.json", "utf8", async (err, data) => {
             let fileData = JSON.parse(data);
@@ -27,7 +27,7 @@ let processName = process.argv[2];
     }
 
 
-})(processName);
+};
 async function deleteKey(processName) {
     fs.readFile("./jsonFiles/processIDs.json", "utf8", (err, data) => {
         let fileData = JSON.parse(data);
@@ -39,3 +39,5 @@ async function deleteKey(processName) {
         })
     })
 }
+
+module.exports=killtask;

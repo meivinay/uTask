@@ -12,9 +12,10 @@ async function getThumbnail(browser, page) {
         catch (e) {
             reject(e);
         }
-        await newpage.screenshot({ path: "./resources/thumbnail.png" });
+        await newpage.screenshot({ path: "./resources/youtubeThumbnail.png" });
         await newpage.close();
         resolve();
     })
 }
+//only for first video played, to not fill notification center
 module.exports = getThumbnail;

@@ -1,17 +1,21 @@
 const puppeteer = require('puppeteer');
 const fs = require("fs");
 const { spawn } = require("child_process");
+const { min } = require('moment');
 
 async function sleepTime(hour, minute, period) {
-    const jobOut = fs.openSync("./log/sleepOut.log", "a")
-    const jobErr = fs.openSync("./log/sleepErr.log", "a")
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     let pages = await browser.pages();
     let page = pages[0];
     await page.goto('https://sleepyti.me/');
-    await page.select("#hour", `${hour}`)
+    await page.select("#hour", `${hour}`);
+    if(minute<10)
+    {
+        minute="0"+minute;
+    }
     await page.select("#minute", `${minute}`);
     await page.select("#ampm", `${period}`);
+    await page.waitForTimeout(100000);
     await page.click("#calculate");
     await page.waitForTimeout(4000);
     await page.waitForSelector("#result4", { visible: true });
@@ -26,9 +30,11 @@ async function sleepTime(hour, minute, period) {
         }
         times.push(obj);
     }
-    await createjson(times, page);
+    await createjson(times, page); //creating json files so can get at which time to showNotification
     try {
-        let subProcess = spawn(process.argv[0], ["sleepUtility/createJob.js"], {
+        const jobOut = fs.openSync("./log/sleepOut.log", "a") //creating streams for detached process
+        const jobErr = fs.openSync("./log/sleepErr.log", "a")
+        let subProcess = spawn(process.argv[0], ["sleepUtility/scheduleNotification.js"], {
             detached: true,
             stdio: ["ignore", jobOut, jobErr]
         });

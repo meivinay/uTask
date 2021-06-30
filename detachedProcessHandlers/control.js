@@ -1,6 +1,6 @@
 const fs = require("fs");
 //by write of this file a change trigger will be listned by watcher
-(async (action) => {
+async function control(action) {
     fs.readFile("./jsonFiles/controls.json", "utf8", async (err, data) => {
         let arr = [];
         let obj = JSON.parse(data)[0];
@@ -19,4 +19,6 @@ const fs = require("fs");
                 console.log("Can not write to File");
         })
     })
-})(process.argv[2]);
+}
+
+module.exports=control;

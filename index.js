@@ -1,12 +1,15 @@
-const sleepTime = require("./sleepUtility/sleepTime.js");
-const wakeTime = require("./sleepUtility/wakeTime.js");
-const breakTime = require("./sleepUtility/breakTime.js");
-const launchYT = require("./youtube/launchYT.js");
-//const recent = require("./jsonFiles/resumePlaylist.json"); // this is causing bugs ,so using fsread
+const getSleepTime = require("./sleepUtility/getSleepTime.js");
+const getWakeupTime = require("./sleepUtility/getWakeUpTime.js");
+const splitTime = require("./sleepUtility/splitTime.js");
+const launchYouTube = require("./youtube/launchYoutube.js");
+const killTask = require("./detachedProcessHandlers/killTask.js");
+const control = require("./detachedProcessHandlers/control.js");
 const fs = require("fs");
+const reminder = require("./calendar/reminder.js");
 let input = process.argv.slice(2);
-let time;
+
 (async () => {
+    let time;
     if (input.length > 2 || input.length == 0) {
         console.log("Command not found");
         return;
@@ -17,7 +20,11 @@ let time;
         if (firstChar === "-") {
             if (input[0] === "-s") {
                 try {
-                    time = await breakTime(input[1])
+                    if (input[1].includes(".") == true) {
+                        console.log("Invalid Input");
+                        return;
+                    }
+                    time = await splitTime(input[1])
                 }
                 catch (e) {
                     console.log(e);
@@ -26,26 +33,36 @@ let time;
                 if (isTimeValid(time)) {
                     let hour = Number(time[0]);
                     let minute = roundoffMinutes(Number(time[1]));
+                    console.log(minute);
                     let period = time[2].toUpperCase();
-                    sleepTime(hour, minute, period);
+                    getSleepTime(hour, minute, period);
                 }
                 else {
                     console.log("Please Enter Valid Time");
                 }
             }
             else if (input[0] === "-w") {
-                wakeTime();
+                getWakeupTime();
             }
             else if (input[0] === "-yt") {
                 if (input[1] === "resume") {
                     fs.readFile("./jsonFiles/resumePlaylist.json", "utf8", async (err, data) => {
                         let recent = JSON.parse(data)[0];
-                        await launchYT(recent["url"]);
+                        await launchYouTube(recent["url"]);
                     })
                 }
                 else {
-                    await launchYT(input[1]);
+                    await launchYouTube(input[1]);
                 }
+            }
+            else if (input[0] === "-kill") {
+                killTask(input[1]);
+            }
+            else if (input[0] === "-c") {
+                control(input[1]);
+            }
+            else if (input[0] === "-r") {
+                reminder();
             }
             else {
                 console.log("Not a valid option");
@@ -68,7 +85,7 @@ function isTimeValid(time) {
 
 
     let minute = Number(time[1]);
-    if (minute >= 0 && minute <= 60)
+    if (minute >= 0 && minute < 60)
         isMinuteValid = true;
 
 
@@ -83,6 +100,9 @@ function isTimeValid(time) {
 }
 
 function roundoffMinutes(minute) {
+    if (minute === 5) {
+        return 5;
+    }
     return Math.ceil(minute / 5) * 5;
 
 }

@@ -1,90 +1,47 @@
 const puppeteer = require("puppeteer");
-const inquirer = require("inquirer");
-const moment = require("moment");
 const chalk = require("chalk");
-const login = require("./../login.js");
-const readline = require('readline');
-
-let wakeupTimings = [];
-
+const inquirer = require("inquirer");
+//const getReminderDateTime = require("./../calendar/reminderDate.js");
+const getReminderTitle=require("./../calendar/reminderTitle.js");
+const convertDateTime = require("./../calendar/convertDate.js");
+const login=require("./../calendar/login.js")
 async function wakeTime() {
-    const browser = await puppeteer.launch({ headless: true, defaultViewport: null, args: ["--start-maximized"], slowMo: 80 });
+    const browser = await puppeteer.launch({ headless: false, defaultViewport: null, args: ["--start-maximized"], slowMo: 80 });
     let pages = await browser.pages();
     let page = pages[0];
     await page.goto('https://sleepyti.me/');
     await page.click("#zzz");
     await page.waitForTimeout(4000);
     await page.waitForSelector("#resultNow6", { visible: true });
+    let wakeupTimings = [];
     for (let i = 1; i <= 6; i++) {
         let time = await page.evaluate((i) => { return document.querySelector(`#resultNow${i}`).innerText }, i);
         wakeupTimings.push(time);
     }
-    printTimings(wakeupTimings);
-    let isSet = await getChoice();
-    if (isSet == true) {
-        let userInput = await getUserInput();
-        let calendarDateFormat = await convertUserInput(userInput.Date);
+    await printTimings(wakeupTimings);
+    let isSetReminder = await getChoice();
+    if (isSetReminder == true) {
+        let reminderDate = await getReminderDateTime();
+        let calendarDateFormat = await convertDateTime(reminderDate.Date);
         console.log(`Creating Reminder for  ${calendarDateFormat[1]} , ${calendarDateFormat[0]}`);
         let reminderTitle = await getReminderTitle();
         await setReminder(browser, calendarDateFormat[0], calendarDateFormat[1], reminderTitle);
     }
-
     await page.waitForTimeout(3000);
     console.log("Reminder is Set");
     await browser.close();
 };
-async function getReminderTitle() {
-    return new Promise(resolve => {
-        const rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
-        rl.question("Please Enter Reminder Title ", (answer) => {
-            resolve(answer);
-            console.log("Title is ", answer);
-            rl.close();
-        });
+async function printTimings(wakeupTimings) {
+    return new Promise((resolve) => {
+        console.log("You should set Alarm for One of these Timings");
+        for (let i = 0; i < wakeupTimings.length; i++) {
+            console.log(wakeupTimings[i]);
+        }
+        resolve();
     })
 }
-function printTimings(wakeupTimings) {
-    console.log("You should set Alarm for One of these Timings");
-    for (let i = 0; i < wakeupTimings.length; i++) {
-        console.log(wakeupTimings[i]);
-    }
-}
 
-async function getUserInput() {
-    return new Promise((resolve, reject) => {
-        inquirer.registerPrompt("date", require("inquirer-date-prompt"));
-        inquirer.prompt({
-            type: "date",
-            name: "Date",
-            message: "Please Select a Date for Reminder"
-        })
-            .then((answer) => {
-                resolve(answer);
-            })
-            .catch((e) => {
-                reject(e);
-            })
-    })
 
-}
-
-async function convertUserInput(userDate) {
-    return new Promise((resolve, reject) => {
-        let dateTime = moment(userDate);
-        dateTime = dateTime.format("MMM D YYYY,h:mma");
-        date = dateTime.split(",")[0].trim();
-        time = dateTime.split(",")[1].trim();
-        let finalDateTime = [];
-        finalDateTime.push(date);
-        finalDateTime.push(time);
-        resolve(finalDateTime);
-    }
-    )
-
-}
 
 async function getChoice() {
     return new Promise((resolve, reject) => {
@@ -98,9 +55,8 @@ async function getChoice() {
             .then((answer) => {
                 if (answer.choice === "Yes") {
                     resolve(true);
-                } 
-                else 
-                {
+                }
+                else {
                     reject(process.exit());
                 }
             }
@@ -116,6 +72,7 @@ async function setReminder(browser, date, time, reminderTitle) {
         //     }, 2000);
         // }); /
         await newpage.goto("https://www.google.com/calendar/about/");
+        await newpage.waitForTimeout(1000);
         await login(newpage);
         await newpage.waitForTimeout(7000);
         let box = await newpage.$('[aria-label="Create"]');
@@ -154,4 +111,21 @@ async function setReminder(browser, date, time, reminderTitle) {
     })
 
 }
+async function getReminderDateTime() {
+    return new Promise((resolve, reject) => {
+        inquirer.registerPrompt("date", require("inquirer-date-prompt"));
+        inquirer.prompt({
+            type: "date",
+            name: "Date",
+            message: "Please Select a Date for Reminder"
+        })
+            .then((answer) => {
+                resolve(answer);
+            })
+            .catch((e) => {
+                reject(e);
+            })
+    })
+}
+
 module.exports = wakeTime;

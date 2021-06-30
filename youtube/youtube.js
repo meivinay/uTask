@@ -1,8 +1,8 @@
 const pup = require("puppeteer");
-const storePID = require("../storePID.js");
+const storePID = require("../detachedProcessHandlers/storePID.js");
 const fs = require("fs");
-const showNotification = require("./../sleepUtility/notifier");
-const startWatching = require("./watcher.js");
+const showNotification = require("../sleepUtility/showNotification");
+const startWatching = require("./performShortcutsAction");
 const chokidar = require("chokidar");
 const getThumbnail = require("./getThumbnail.js");
 
@@ -14,7 +14,7 @@ const getThumbnail = require("./getThumbnail.js");
         console.error("Could Not store Process ID");
         process.exit();
     }
-    let browser = await pup.launch({ headless: true, ignoreDefaultArgs: ["--mute-audio"] });
+    let browser = await pup.launch({ headless: true, ignoreDefaultArgs: ["--mute-audio"],args:["--start-maximized"],defaultViewport:null });
     let pages = await browser.pages();
     let page = pages[0];
     page.on("framenavigated", async () => {
@@ -27,7 +27,7 @@ const getThumbnail = require("./getThumbnail.js");
             }
         });
         setTimeout(() => {
-            page.screenshot({ path: "./debugYoutube/youtube.png" }); // visual of last visited page
+            page.screenshot({ path: "./debug/youtube.png" }); // visual of last visited page for debug purpose
         }, 2000);
 
     });
@@ -52,7 +52,7 @@ const getThumbnail = require("./getThumbnail.js");
             title: "Youtube Now Playing",
             message: title,
             sound: false,
-            icon: ".//resources//thumbnail.png"
+            icon: ".//resources//youtubeThumbnail.png"
         }
         await showNotification(notificationProperties);
     }
