@@ -43,7 +43,7 @@ Scrap Best possible Timing to sleep or wakeup from https://sleepyti.me so you wo
 
 3. YouTube
 Provide a URL of a YouTube playlists first video Or Podcast and will play it for you while not blocking your working screen area.
-    3.1 Play playlist or video on YouTube.
+    3.1 Play playlist or video on YouTube show notification for first video with video thumbnail.
     3.2 Resume last played video.
     3.4 Gives you acces to YouTube playback controls using command line. (see usage)
     3.5 You can also control playback using keyboard multimedia keys.
@@ -71,10 +71,10 @@ Usage
    3.1 Uses    =>  -yt Option and take URL of YouTube Video as a String argument
        Example =>  -yt "<URL>"
        Output  =>   Run a detached process which plays given URL video in chromius headless mode
-                    Show Windows Toast Notification for very first played video.
+                    Show Windows Toast Notification with video thumbnail as icon for very first played video.
    3.2 Uses    =>  -yt Option with "resume" as String argument
        Example =>  -yt "resume"
-       Output  =>   Run a detached process which plays last played video in chromium headless mode
+       Output  =>   Run a detached process which plays last played video in chromium headless mode also show thumbnail
 
    3.3 Uses    =>   -yt Option and take "shortcutKey" as a String argument
        Example =>   -yt "P" 
@@ -85,7 +85,7 @@ Example => uTask -kill "youtube"
                  OR
            uTask -kill "sleepUtility"
 
-Shortcut Keys for YouTube playback =>
+List Shortcut Keys for YouTube playback =>
 
 "S"  start/stop OR play/pause
 "N"  jump to Next Video in Playlist
