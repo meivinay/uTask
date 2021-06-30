@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const getSleepTime = require("./sleepUtility/getSleepTime.js");
 const getWakeupTime = require("./sleepUtility/getWakeUpTime.js");
 const splitTime = require("./sleepUtility/splitTime.js");

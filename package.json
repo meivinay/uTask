@@ -18,5 +18,8 @@
     "node-notifier": "^10.0.0",
     "node-schedule": "^2.0.0",
     "puppeteer": "^10.0.0"
+  },
+  "bin": {
+    "uTask": "index.js"
   }
 }
