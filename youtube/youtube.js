@@ -16,10 +16,10 @@ const getThumbnail = require("./getThumbnail.js");
     }
     let browser = await pup.launch({ headless: true, ignoreDefaultArgs: ["--mute-audio"],args:["--start-maximized"],defaultViewport:null });
     let pages = await browser.pages();
-    let page = pages[0];
-    page.on("framenavigated", async () => {
+    let youtube = pages[0];
+    youtube.on("framenavigated", async () => {
         let url = [];
-        url.push({ "url": page.url() });
+        url.push({ "url": youtube.url() });
         // console.log(`Current Url is ${page.url()}`);  //comment out if want to write every visited link to youtubeOut.log
         fs.writeFile("./jsonFiles/resumePlaylist.json", JSON.stringify(url), (err) => {
             if (err) {
@@ -27,27 +27,27 @@ const getThumbnail = require("./getThumbnail.js");
             }
         });
         setTimeout(() => {
-            page.screenshot({ path: "./debug/youtube.png" }); // visual of last visited page for debug purpose
+            youtube.screenshot({ path: "./debug/youtube.png" }); // visual of last visited page for debug purpose
         }, 2000);
 
     });
     try {
-        await page.goto(url);
+        await youtube.goto(url);
     }
     catch (e) {
         console.error("Invalid URL/Internet is Slow");
         process.exit();
     }
     const watcher = chokidar.watch("./jsonFiles/controls.json", { persistent: true, awaitWriteFinish: true });
-    startWatching(page, watcher);
+    startWatching(youtube, watcher);
     browser.on('disconnected', () =>   // close watcher when browser close , so node server can stop watching and let process exit 
     {
         watcher.close();
     })
-    await page.waitForTimeout(2000);
+    await youtube.waitForTimeout(2000);
     try {
-        await getThumbnail(browser, page);
-        let title = await page.evaluate(() => { return document.querySelector("h1>.style-scope.ytd-video-primary-info-renderer").innerText });
+        await getThumbnail(browser, youtube);
+        let title = await youtube.evaluate(() => { return document.querySelector("h1>.style-scope.ytd-video-primary-info-renderer").innerText });
         let notificationProperties = {
             title: "Youtube Now Playing",
             message: title,
@@ -59,9 +59,9 @@ const getThumbnail = require("./getThumbnail.js");
     catch (e) {
         console.error(`No thumbail link found for ${url} error is ${e}`);
     }
-    await page.waitForSelector("#movie_player", { visible: true });
-    await page.click("#movie_player");
-    await page.evaluate(async () => {
+    await youtube.waitForSelector("#movie_player", { visible: true });
+    await youtube.click("#movie_player");
+    await youtube.evaluate(async () => {
         setInterval(async () => {
             let btnFound = document.querySelector(".ytp-ad-skip-button");
             if (btnFound) {

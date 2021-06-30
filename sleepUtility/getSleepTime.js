@@ -3,24 +3,24 @@ const fs = require("fs");
 const { spawn } = require("child_process");
 const moment=require("moment");
 async function sleepTime(hour, minute, period) {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     let pages = await browser.pages();
-    let page = pages[0];
-    await page.goto('https://sleepyti.me/');
-    await page.select("#hour", `${hour}`);
+    let sleepyTime = pages[0];
+    await sleepyTime.goto('https://sleepyti.me/');
+    await sleepyTime.select("#hour", `${hour}`);
     if(minute<10)
     {
         minute="0"+minute;
     }
-    await page.select("#minute", `${minute}`);
-    await page.select("#ampm", `${period}`);
-    await page.waitForTimeout(1000);
-    await page.click("#calculate");
-    await page.waitForTimeout(4000);
-    await page.waitForSelector("#result4", { visible: true });
+    await sleepyTime.select("#minute", `${minute}`);
+    await sleepyTime.select("#ampm", `${period}`);
+    await sleepyTime.waitForTimeout(1000);
+    await sleepyTime.click("#calculate");
+    await sleepyTime.waitForTimeout(4000);
+    await sleepyTime.waitForSelector("#result4", { visible: true });
     let times = [];
     for (let i = 1; i <= 4; i++) {
-        let time = await page.evaluate((i) => { return document.querySelector(`#result${i}`).innerText }, i);
+        let time = await sleepyTime.evaluate((i) => { return document.querySelector(`#result${i}`).innerText }, i);
     //     time=moment(time) //wrape with moment module to manipulate time
     //    time=time.
         let hour = Number((timeFormatChange(time.split(":")[0], time.split(" ")[1]))); // extract hour and period from scrapped time and change to 24 hour format
@@ -38,7 +38,7 @@ async function sleepTime(hour, minute, period) {
         }
         times.push(obj);
     }
-    await createjson(times, page); //creating json files so can get at which time to showNotification
+    await createjson(times, sleepyTime); //creating json files so can get at which time to showNotification
     try {
         const jobOut = fs.openSync("./log/sleepOut.log", "a") //creating streams for detached process
         const jobErr = fs.openSync("./log/sleepErr.log", "a")
@@ -48,12 +48,12 @@ async function sleepTime(hour, minute, period) {
         });
         subProcess.unref();
         console.log(`You will be notified at ${times[0]["hour"]} ${[times[0]["minute"]]}`);
-        await page.close();
+        await sleepyTime.close();
         process.exit();
     }
     catch (e) {
         console.log("there was some problem creating a job, try again /Error is ===>" + e);
-        await page.close();
+        await sleepyTime.close();
     }
 }
 function timeFormatChange(hour, period) {

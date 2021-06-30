@@ -76,8 +76,8 @@ Usage
        Example =>  -yt "resume"
        Output  =>   Run a detached process which plays last played video in chromium headless mode also show thumbnail
 
-   3.3 Uses    =>   -yt Option and take "shortcutKey" as a String argument
-       Example =>   -yt "P" 
+   3.3 Uses    =>   -c Option and take "shortcutKey" as a String argument
+       Example =>   -c "P" 
        Output  =>   play previous video in the playlist(if any)
 
 To kill any of the above task use following command on your Terminal => uTask -kill "taskName"

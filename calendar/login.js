@@ -1,23 +1,27 @@
-const creditionals = require("./logInfo.js");
+const creditionals = require("./logInfo.js");  //below is structure of logininfo.js
+//  {
+//  userName:"username",
+ //   pass:"password"
+//  }
 
-async function login(page) {
+async function login(googleCalendar) {
     return new Promise(async (resolve, reject) => {
         try {
-            await page.waitForTimeout(4000);
-            await page.click(".signin-btn");
+            await googleCalendar.waitForTimeout(4000);
+            await googleCalendar.click(".signin-btn");
             let mail = creditionals.userName;
             let pass = creditionals.pass;
-            await page.waitForTimeout(2000);
+            await googleCalendar.waitForTimeout(3000);
             for (let i = 0; i < mail.length; i++) {
-                await page.keyboard.press(mail.charAt(i), { delay: 346 });
+                await googleCalendar.keyboard.press(mail.charAt(i), { delay: 346 });
             }
-            await page.keyboard.press("Enter", { delay: 200 });
-            await page.waitForTimeout(2000);
+            await googleCalendar.keyboard.press("Enter", { delay: 200 });
+            await googleCalendar.waitForTimeout(2000);
             for (let i = 0; i < pass.length; i++) {
-                await page.keyboard.press(pass.charAt(i), { delay: 616 });
+                await googleCalendar.keyboard.press(pass.charAt(i), { delay: 616 });
             }
-            await page.keyboard.press("Enter", { delay: 200 });
-            await page.waitForTimeout(4000);
+            await googleCalendar.keyboard.press("Enter", { delay: 200 });
+            await googleCalendar.waitForTimeout(4000);
             resolve();
         }
         catch (e) {

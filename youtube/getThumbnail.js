@@ -1,21 +1,21 @@
-async function getThumbnail(browser, page) {
+async function getThumbnail(browser, youtube) {
     return new Promise(async (resolve, reject) => {
-        let thumbnailLink = await page.evaluate(() => {
+        let thumbnailLink = await youtube.evaluate(() => {
             let aTag = document.querySelector('[rel="image_src"]');
             let link = aTag.getAttribute("href");
             return link
         })
-        let newpage = await browser.newPage();
+        let thumbnailPage = await browser.newPage();
         try {
-            await newpage.goto(thumbnailLink);
+            await thumbnailPage.goto(thumbnailLink);
         }
         catch (e) {
             reject(e);
         }
-        await newpage.screenshot({ path: "./resources/youtubeThumbnail.png" });
-        await newpage.close();
+        await thumbnailPage.screenshot({ path: "./resources/youtubeThumbnail.png" });
+        await thumbnailPage.close();
         resolve();
     })
 }
-//only for first video played, to not fill notification center
+//only for first played video, to not fill notification center
 module.exports = getThumbnail;
