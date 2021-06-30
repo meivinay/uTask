@@ -9,43 +9,43 @@ async function watcher(page, watcher) {
             let obj = JSON.parse(data)[0];
             for (k in obj) {                          //initially all key are false
                 if (obj[k] === true) {
-                    if (k == "play" || k == "pause") {
+                    if (k == "S") {                           //start stop
                         await page.keyboard.press("KeyK");
                     }
-                    else if (k === "playNext") {
+                    else if (k === "N") {                   //next video
                         await page.keyboard.down('Shift');
                         await page.keyboard.press('KeyN');
                         await page.keyboard.up('Shift');
                     }
-                    else if (k === "playPrevious") {
+                    else if (k === "P") {                   //previous video
                         await page.keyboard.down('Shift');
                         await page.keyboard.press('KeyP');
                         await page.keyboard.up('Shift');
                     }
-                    else if (k === "mute" || k === "unmute") {
+                    else if (k === "M") {                       // mute unmute
                         await page.keyboard.press("KeyM");
                     }
-                    else if (k === "seekBackward") {
+                    else if (k === "B") {                       // seek 10 seconds backward
                         await page.keyboard.press("KeyJ");
                     }
-                    else if (k === "seekForward") {
+                    else if (k === "F") {                       // seek 10 seconds forward
                         await page.keyboard.press("KeyL");
                     }
-                    else if (k === "speedUp") {
+                    else if (k === "U") {                       // speed up video
                         await page.keyboard.down('Shift');
                         await page.keyboard.press('.');
                         await page.keyboard.up('Shift');
                     }
-                    else if (k === "speedDown") {
+                    else if (k === "D") {                       //slow down video
                         await page.keyboard.down('Shift');
                         await page.keyboard.press(",");
                         await page.keyboard.up('Shift');
                     }
-                    else if (k === "home") {
+                    else if (k === "H") {                       // begining of video
                         await page.keyboard.press("Home");
 
-                    }
-                    else if (k === "end") {
+                    }  
+                    else if (k === "E") {                     // end of the video
                         await page.keyboard.press("End");
                     }
                     obj[k] = false;

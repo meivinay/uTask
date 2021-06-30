@@ -1,1 +1,14 @@
-[{"play":false,"pause":false,"playNext":false,"playPrevious":false,"home":false,"end":false,"mute":false,"unmute":false,"seekBackward":false,"seekForward":false,"speedUp":false,"speedDown":false}]
+[
+    {
+        "S": false,
+        "N": false,
+        "P": false,
+        "H": false,
+        "E": false,
+        "M": false,
+        "B": false,
+        "F": false,
+        "U": false,
+        "D": false
+    }
+]
