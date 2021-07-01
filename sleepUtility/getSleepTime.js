@@ -32,6 +32,7 @@ async function sleepTime(hour, minute, period) {
             minute=minute-20;
             }
             else{
+                if(hour!=0)
                 hour=hour-1;
                 minute=60+(minute-20);
             }

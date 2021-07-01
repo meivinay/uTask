@@ -26,9 +26,9 @@ const getThumbnail = require("./getThumbnail.js");
                 console.error(err);
             }
         });
-        setTimeout(() => {
-            youtube.screenshot({ path: "./debug/youtube.png" }); // visual of last visited page for debug purpose
-        }, 2000);
+        // setTimeout(() => {
+        //     youtube.screenshot({ path: "./debug/youtube.png" }); // visual of last visited page for debug purpose
+        // }, 2000);
 
     });
     try {
