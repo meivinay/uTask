@@ -2,6 +2,9 @@ const puppeteer = require('puppeteer');
 const fs = require("fs");
 const { spawn } = require("child_process");
 const moment=require("moment");
+const showAlert=require("./../detachedProcessHandlers/showAlert.js");
+const chokidar=require("chokidar");
+
 async function sleepTime(hour, minute, period) {
     const browser = await puppeteer.launch({ headless: true });
     let pages = await browser.pages();
@@ -38,8 +41,14 @@ async function sleepTime(hour, minute, period) {
         }
         times.push(obj);
     }
-    await createjson(times, sleepyTime); //creating json files so can get at which time to showNotification
-    try {
+    await browser.close();
+    try{
+    await createjson(times); //creating json files so can get at which time to showNotification
+    }
+    catch(e){
+            console.log("Can not Write to times.json");
+    }
+try {
         const jobOut = fs.openSync("./log/sleepOut.log", "a") //creating streams for detached process
         const jobErr = fs.openSync("./log/sleepErr.log", "a")
         let subProcess = spawn(process.argv[0], ["sleepUtility/scheduleNotification.js"], {
@@ -47,15 +56,28 @@ async function sleepTime(hour, minute, period) {
             stdio: ["ignore", jobOut, jobErr]
         });
         subProcess.unref();
-        console.log(`You will be notified at ${times[0]["hour"]} ${[times[0]["minute"]]}`);
-        await sleepyTime.close();
-        process.exit();
+        //let alert=`You will be notified at ${times[0]["hour"]} ${[times[0]["minute"]]}`
+        const watcher = chokidar.watch("./detachedProcessHandlers/alert.txt", { persistent: true, awaitWriteFinish: true });
+        watcher.on("change",async(path)=>{
+            await showAlert();
+            watcher.close();
+            process.exit();
+        })
+
+        setTimeout(() => {
+            console.log("Late Response,May be process already running,Please close previous process");
+            watcher.close();
+            process.exit();
+        }, 5000);
     }
     catch (e) {
-        console.log("there was some problem creating a job, try again /Error is ===>" + e);
-        await sleepyTime.close();
+        console.log("There was some problem creating a job, try again /Error is ===>" + e);
+        process.exit();
     }
 }
+
+
+
 function timeFormatChange(hour, period) {
     if (period === "AM" && hour == 12)
         return Number(hour) - 12;
@@ -66,12 +88,11 @@ function timeFormatChange(hour, period) {
     return Number(hour);
 }
 
-async function createjson(times, page) {
-    return new Promise(resolve => {
+async function createjson(times) {
+    return new Promise((resolve,reject) => {
         fs.writeFile("./jsonFiles/times.json", JSON.stringify(times), async (err) => {
             if (err) {
-                console.log("Cant write File");
-                await page.close();
+                reject(e)
             }
             else {
                 resolve();

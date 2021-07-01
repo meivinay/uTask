@@ -4,19 +4,15 @@ const schedule = require('node-schedule');
 const createNotification = require("./showNotification.js");
 const storePID = require("./../detachedProcessHandlers/storePID.js");
 const fs = require("fs");
+const writeAlert = require("../detachedProcessHandlers/writeAlert.js");
 (async () => {
-  try {
-    await storePID(process.pid, "sleepTime");
-  }
-  catch (e) {
-    process.exit();
-  }
   let times;
   try {
+    let alert= await storePID(process.pid, "sleepTime");
     times = await readFile();
+    await writeAlert(alert,times);
   }
   catch (e) {
-    console.error("Could not Read times.json file to Schedule Job\n Error is ====>\n"+e);
     process.exit();
   }
   console.log(times);

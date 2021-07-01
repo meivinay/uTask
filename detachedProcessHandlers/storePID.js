@@ -15,7 +15,7 @@ async function storePID(pid, processName) {
                         reject(err);
                     }
                     else {
-                        resolve();
+                        resolve(`${processName} Launched`);
                     }
                 })
             }
