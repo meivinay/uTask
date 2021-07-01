@@ -1,12 +1,12 @@
 Welcome to uTask
 
-I have tried to automate some of the basic micro task we may perform on daily basis.\
+I have tried to automate some of the basic micro task we may perform on daily basis using nodejs.\
 The goal of this project in not just automate some uTask but to run in background and not to make user
 worry about accidentaly closing the uTask or take space in recent open tab/windows where already many\
 tab/windows are opened, this gives user a minimalist feel. Also by using this we won't have to take our hands of
-out keyboard because there are many option provided to control the application.\
+out keyboard because there are many option provided to control the application.
 
-The main and important feature of this project is/are
+The main and important feature of this project are
 1. Do not block access to terminal while uTask runnig in background.
 2. Do not close when terminal is closed.
 3. Programs Send/Recieve information between each other.  
@@ -102,32 +102,41 @@ List Shortcut Keys for YouTube playback =>
 "U"  Faster Playback Speed OR Speed Up\
 "D"  Slower Playback Speed OR Slow Down\
 "H"  Jump to Beginnig of current video\
-"E"  Jump to End of current video\
+"E"  Jump to End of current video
 
 *You can also use your keyboard mutimedia key for playback actions(This feature is not implemented by this program)
 
 How?
 
-In development of  this project i have learned and used several npm or in-built node packages. Some of these are\
+In development of  this project i have used several npm or in-built node packages. Some of these are\
 1. Puppeteer\
-  Used to scrap/load data from websites.\
+  Used to scrap/load data from websites.
 2. fs\
-   Access local file System.\
+   Access local file System.
 3. child-process\
-   To spawn child-process as a detached process so it will no longer block Terminal access.\
+   To spawn child-process as a detached process so it will no longer block Terminal access.
 4. node-notifier\
-   Show Windows Toast Notification.\
+   Show Windows Toast Notification.
 5. node-schedule\
-   Execute a command at particular given time.\
+   Execute a command at particular given time.
 6. chokidar\
-   Listen for update in File System.\
+   Listen for update in File System.
 7. inquirer\
-   Take user Input at run-time.\
+   Take user Input at run-time.
 8. is-running\
-   Check if a Process with given Process ID is running or not.\
+   Check if a Process with given Process ID is running or not.
 
 By using above packages i have a created a little environment which can send/recieve data among running process. So that even a process is detached and you no longer have direct access to it, you can still give commands to the child process. 
 for example- When we launch YouTube in our project it loads in puppeteer , we can not access playback directly. So i write some small programs which send/recieve commands to puppeteer to perfom required actions.\
 I also implement a small program to kill these background processes when these are no longer needed.\
-Only those task which used google reminder will not run in background. There are high chances that google will block our program at any level of processing. Also keeping in mind Reminders are very important notifications, we can not let any type failure during setting a reminder or user can loose some important information./
-   
+Only those task which used google reminder will not run in background. There are high chances that google will block our program at any level of processing. Also keeping in mind Reminders are very important notifications, we can not let any type failure during setting a reminder or user can loose some important information.
+
+This project has taught me to-
+1. Access/Update File System.
+2. Scrap Data from a website.
+3. Automate a process.
+4. Create Child-processes.
+5. Message passing.
+6. Manipulate processes using their Process Ids.
+7. Write a modular and clean code.
+8. Divide large Programs in small easily managable small sub-programs.
