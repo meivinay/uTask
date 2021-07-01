@@ -92,7 +92,7 @@ async function createjson(times) {
     return new Promise((resolve,reject) => {
         fs.writeFile("./jsonFiles/times.json", JSON.stringify(times), async (err) => {
             if (err) {
-                reject(e)
+                reject(err)
             }
             else {
                 resolve();
