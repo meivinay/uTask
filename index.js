@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 const getSleepTime = require("./sleepUtility/getSleepTime.js");
 const getWakeupTime = require("./sleepUtility/getWakeUpTime.js");
 const splitTime = require("./sleepUtility/splitTime.js");
@@ -48,6 +47,11 @@ let input = process.argv.slice(2);
             else if (input[0] === "-yt") {
                 if (input[1] === "resume") {
                     fs.readFile("./jsonFiles/resumePlaylist.json", "utf8", async (err, data) => {
+                        if(err)
+                        {
+                            console.log(err);
+                        }
+                        console.log("opening");
                         let recent = JSON.parse(data)[0];
                         await launchYouTube(recent["url"]);
                     })

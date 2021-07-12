@@ -89,7 +89,7 @@ Usage
 To kill any of the above task use following command on your Terminal => uTask -kill "taskName"\
 Example => uTask -kill "youtube"\
                  OR\
-           uTask -kill "sleepUtility"
+           uTask -kill "sleepTime"
 
 List Shortcut Keys for YouTube playback =>
 

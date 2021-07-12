@@ -1,9 +1,9 @@
 const puppeteer = require("puppeteer");
 const chalk = require("chalk");
 const inquirer = require("inquirer");
-const moment=require("moment")
+const moment=require("moment");
 const getReminderTitle=require("./../calendar/reminderTitle.js");
-const login=require("./../calendar/login.js")
+const login=require("./../calendar/login.js");
 async function wakeTime() {
     const browser = await puppeteer.launch({ headless: true, defaultViewport: null, args: ["--start-maximized"], slowMo: 80 });
     let pages = await browser.pages();
