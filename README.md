@@ -9,7 +9,8 @@ out keyboard because there are many option provided to control the application.
 The main and important feature of this project are
 1. Do not block access to terminal while uTask runnig in background.
 2. Do not close when terminal is closed.
-3. Programs Send/Recieve information between each other.  
+3. Programs Send/Recieve information between each other.
+4. Do not run a Process again if its already running 
 
 These micro Task or uTask that can be performed using this project are
 1. Set Sleep or WakeUp Schedule
