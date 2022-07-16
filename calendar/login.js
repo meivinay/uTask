@@ -9,6 +9,9 @@ async function login(googleCalendar) {
         try {
             await googleCalendar.waitForTimeout(4000);
             await googleCalendar.click(".signin-btn");
+            if(!creditionals.userName || !creditionals.pass) {
+                return;
+            }
             let mail = creditionals.userName;
             let pass = creditionals.pass;
             await googleCalendar.waitForTimeout(3000);

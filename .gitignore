@@ -1,6 +1,5 @@
 node_modules
 schedule.log
-logInfo.js
 youtube.log
 test.js
 scheduleErr.log
@@ -21,3 +20,8 @@ youtube.png
 youtubeThumbnail.png
 package.json
 alert.txt
+logInfo.js
+.eslintrc.js
+.prettierignore
+.prettierrc
+processIDs.json
